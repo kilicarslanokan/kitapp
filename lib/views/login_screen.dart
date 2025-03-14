@@ -57,6 +57,7 @@ class LoginScreen extends StatelessWidget {
                   children: [
                     Checkbox(value: false, onChanged: (bool? newValue) {},
                     activeColor: anaRenk,
+                    side: BorderSide(color: anaRenk, width: 2),
                     ),
                     Text('Remember Me',style: TextStyle(color: anaRenk,fontSize: 15.sp)),
                     Spacer(),
