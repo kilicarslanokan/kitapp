@@ -1,18 +1,25 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:kitapp/views/home_screen.dart';
 import 'package:kitapp/views/login_screen.dart';
 import 'package:kitapp/widgets/colors.dart';
 
-class SplashScreen extends StatefulWidget {
+@override
+class SplashScreen extends ConsumerWidget {
   const SplashScreen({super.key});
-
+  
   @override
-  State<SplashScreen> createState() => _SplashScreenState();
-}
+  Widget build(BuildContext context, WidgetRef ref) {
+   
 
-class _SplashScreenState extends State<SplashScreen> {
-  @override
-  Widget build(BuildContext context) {
+    Future.delayed(Duration(seconds: 3), () {
+        Navigator.pushReplacement( // arka sayfayı kapatır ve geri dönemeyiz
+          context,
+          MaterialPageRoute(builder: (context) => HomeScreen()),
+        );
+
+    });
     return Scaffold(
       backgroundColor: textRenk,
       body: Column(
@@ -26,11 +33,14 @@ class _SplashScreenState extends State<SplashScreen> {
             padding: const EdgeInsets.only(bottom: 1.0),
             child: ElevatedButton(
               onPressed: () {
-                Navigator.push(context, MaterialPageRoute(builder: (context) => LoginScreen()));
+                Navigator.pushReplacement(
+                  context,
+                  MaterialPageRoute(builder: (context) => LoginScreen()),
+                );
               },
               style: ElevatedButton.styleFrom(
                 backgroundColor: butonRenk,
-                minimumSize: Size(390, 60),
+                minimumSize: Size(360, 60),
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(5),
                 ),
@@ -44,10 +54,15 @@ class _SplashScreenState extends State<SplashScreen> {
           Padding(
             padding: const EdgeInsets.only(bottom: 65.0),
             child: ElevatedButton(
-              onPressed: () {},
+              onPressed: () {
+                Navigator.pushReplacement(
+                  context,
+                  MaterialPageRoute(builder: (context) => HomeScreen()),
+                );
+              },
               style: ElevatedButton.styleFrom(
                 backgroundColor: textRenk,
-                minimumSize: Size(390, 60),
+                minimumSize: Size(360, 60),
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(5),
                 ),
