@@ -1,25 +1,45 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:get_storage/get_storage.dart';
 import 'package:kitapp/views/home_screen.dart';
 import 'package:kitapp/views/login_screen.dart';
 import 'package:kitapp/widgets/colors.dart';
 
-@override
-class SplashScreen extends ConsumerWidget {
+class SplashScreen extends ConsumerStatefulWidget {
   const SplashScreen({super.key});
-  
+
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
-   
+  ConsumerState<ConsumerStatefulWidget> createState() => _SplashScreenState();
+}
 
-    Future.delayed(Duration(seconds: 3), () {
-        Navigator.pushReplacement( // arka sayfayı kapatır ve geri dönemeyiz
-          context,
-          MaterialPageRoute(builder: (context) => HomeScreen()),
+class _SplashScreenState extends ConsumerState<SplashScreen> {
+    final box = GetStorage();
+
+  @override
+  void initState() {
+    Future.delayed(const Duration(seconds: 3), () {
+      if (box.read("token")!=null) {
+        Navigator.pushReplacement(
+          context,  
+          MaterialPageRoute(
+            builder: (context) => HomeScreen()
+          )
         );
-
+      } else {
+        Navigator.pushReplacement(
+          context,
+          MaterialPageRoute(
+            builder: (context) => LoginScreen()
+          )
+        );
+      }
     });
+    super.initState();
+  }
+
+  @override
+  Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: textRenk,
       body: Column(
