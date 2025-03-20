@@ -6,13 +6,13 @@ import 'package:kitapp/views/home_screen.dart';
 import 'package:kitapp/services/login_service.dart';
 
 class LoginRiverpod extends ChangeNotifier {
-  final service = Service();
+  final service = LoginService();
   TextEditingController email = TextEditingController();
   TextEditingController password = TextEditingController();
   final box= GetStorage();
 
   void fetch (BuildContext context, WidgetRef ref) async {
-        final rememberMe = ref.read(rememberMeProvider); // Checkbox durumu
+    final rememberMe = ref.read(rememberMeProvider); // Checkbox durumu
 
     service.loginCall(email: email.text, password: password.text).then((value) {
       if (value != null) {

@@ -1,7 +1,7 @@
 import 'package:dio/dio.dart';
 import 'package:kitapp/models/login_model.dart';
 
-class Service {
+class LoginService {
   final String baseUrl = "https://assign-api.piton.com.tr/api/rest/";
   final dio = Dio();
   Future<LoginModel?> loginCall({
