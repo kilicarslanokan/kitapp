@@ -60,7 +60,7 @@ class _SplashScreenState extends ConsumerState<SplashScreen> {
               },
               style: ElevatedButton.styleFrom(
                 backgroundColor: butonRenk,
-                minimumSize: Size(360, 60),
+                minimumSize: Size(330.w, 50.h),
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(5),
                 ),
@@ -72,8 +72,8 @@ class _SplashScreenState extends ConsumerState<SplashScreen> {
             ),
           ),
           Padding(
-            padding: const EdgeInsets.only(bottom: 65.0),
-            child: ElevatedButton(
+            padding: EdgeInsets.only(bottom: 30.h),
+            child: TextButton(
               onPressed: () {
                 Navigator.pushReplacement(
                   context,
@@ -82,7 +82,7 @@ class _SplashScreenState extends ConsumerState<SplashScreen> {
               },
               style: ElevatedButton.styleFrom(
                 backgroundColor: textRenk,
-                minimumSize: Size(360, 60),
+                //minimumSize: Size(330.w, 50.h),
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(5),
                 ),

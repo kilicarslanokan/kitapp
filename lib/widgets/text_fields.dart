@@ -20,6 +20,7 @@ class CostumeTextField extends StatelessWidget {
   Widget build(BuildContext context) {
     return TextFormField(
       controller: controller,
+      obscureText: obscureText,
       decoration: InputDecoration(
         filled: true,
         fillColor: cardRenk,
