@@ -7,6 +7,8 @@ class Book {
   final double price;
   final int sales;
   final String slug;
+  final int categoryId; // Add this field
+
 
   Book({
     required this.id,
@@ -17,6 +19,8 @@ class Book {
     required this.price,
     required this.sales,
     required this.slug,
+    required this.categoryId, // Add this parameter
+
   });
 
   // JSON'dan User nesnesine dönüşüm
@@ -30,6 +34,7 @@ class Book {
       price: json['price'].toDouble(),
       sales: json['sales'],
       slug: json['slug'],
+      categoryId: (json['category_id'] ?? 0) as int, // Ensure non-null
     );
   }
 }
