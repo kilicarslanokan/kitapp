@@ -81,7 +81,7 @@ class HomeScreen extends ConsumerWidget {
                     prefixIcon: Icon(Icons.search, color: Colors.deepPurple),
                     suffixIcon: Padding(
                       padding: const EdgeInsets.all(12.0),
-                      child: SvgPicture.asset('assets/Filter.svg'),
+                      child: SvgPicture.asset('assets/images/Filter.svg'),
                     ),
                     hintText: 'Search',
                     border: OutlineInputBorder(
