@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:kitapp/models/book_model.dart';
 import 'package:kitapp/riverpod/riverpod_management.dart';
@@ -20,7 +21,7 @@ class CategoryScreen extends ConsumerWidget {
 
     return Scaffold(
       appBar: AppBar(
-        toolbarHeight: 70,
+        toolbarHeight: 50.h,
         title: Row(
           mainAxisAlignment: MainAxisAlignment.end,
           children: [

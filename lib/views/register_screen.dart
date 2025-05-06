@@ -104,7 +104,15 @@ class _RegisterScreenState extends ConsumerState<RegisterScreen> {
                   ),
                   Spacer(),
                   CustomButton(
-                    text: "Register",
+                    child: Center(
+                      child: Text(
+                        "Register",
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontSize: 20.sp,
+                        ),
+                      ),
+                    ),
                     onPressed: () {
                       if (_formKey.currentState!.validate()) {
                         ref.read(registerProvider).register(context);

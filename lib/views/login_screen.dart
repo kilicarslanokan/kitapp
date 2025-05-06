@@ -119,7 +119,13 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                     ),
                     Spacer(),
                     CustomButton(
-                        text: "Login",
+                        child: Text(
+                          "Login",
+                          style: TextStyle(
+                            color: Colors.white,
+                            fontSize: 20.sp,
+                          ),
+                        ),
                         onPressed: () {
                           if (_formKey.currentState!.validate()) {
                             ref.read(loginRiverpod).fetch(context, ref);
