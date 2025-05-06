@@ -1,10 +1,12 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:kitapp/riverpod/riverpod_management.dart';
 import 'package:kitapp/views/book_details_screen.dart';
 import 'package:kitapp/views/category_screen.dart';
+import 'package:kitapp/widgets/colors.dart';
 
 class HomeScreen extends ConsumerWidget {
   const HomeScreen({super.key});
@@ -24,19 +26,22 @@ class HomeScreen extends ConsumerWidget {
     final books = ref.watch(searchProvider);
 
     return Scaffold(
+      backgroundColor: Colors.white,
       appBar: AppBar(
+        backgroundColor: Colors.white,
+        toolbarHeight: 50.h,
         title: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             Image.asset('assets/images/Logo.png', height: 40),
-            const Text("Catalog"),
+            const Text("Catalog", style: TextStyle(fontWeight: FontWeight.bold)),
           ],
         ),
       ),
       body: Stack(
         children: [
           Padding(
-            padding: const EdgeInsets.all(8.0),
+            padding: const EdgeInsets.all(12.0),
             child: Column(
               children: [
                 categoryAsyncValue.when(
@@ -52,22 +57,37 @@ class HomeScreen extends ConsumerWidget {
                               ref.read(selectedCategoryProvider.notifier).state = 0;
                             },
                             style: ElevatedButton.styleFrom(
-                              foregroundColor: selectedCategoryId == 0 ? Colors.white : Colors.deepPurple,
-                              backgroundColor: selectedCategoryId == 0 ? Colors.deepPurple : Colors.white,
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(5.0),
+                              ),
+                              foregroundColor: selectedCategoryId == 0 ? Colors.white : Colors.black38,
+                              backgroundColor: selectedCategoryId == 0 ? Colors.deepPurple : cardRenk,
                             ),
-                            child: Text('All'),
+                            child: Text('All',
+                                style: TextStyle(fontSize: 14.sp)),
                           ),
+                          SizedBox(width: 8.w),
                           ...categories.map((category) {
                             final isSelected = selectedCategoryId == category.id;
-                            return ElevatedButton(
-                              onPressed: () {
-                                ref.read(selectedCategoryProvider.notifier).state = category.id;
-                              },
-                              style: ElevatedButton.styleFrom(
-                                foregroundColor: isSelected ? Colors.white : Colors.deepPurple,
-                                backgroundColor: isSelected ? Colors.deepPurple : Colors.white,
-                              ),
-                              child: Text(category.name),
+                            return Row(
+                              children: [
+                                ElevatedButton(
+                                  onPressed: () {
+                                    ref.read(selectedCategoryProvider.notifier).state = category.id;
+                                  },
+                                  style: ElevatedButton.styleFrom(
+                                    padding: EdgeInsets.symmetric(horizontal: 20.w, vertical: 8.h),
+                                    shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(5.0),
+                                    ),
+                                    foregroundColor: isSelected ? Colors.white : Colors.black38,
+                                    backgroundColor: isSelected ? Colors.deepPurple : cardRenk,
+                                  ),
+                                  child: Text(category.name,
+                                      style: TextStyle(fontSize: 14.sp)),
+                                ),
+                                SizedBox(width: 8.w),
+                              ],
                             );
                           }).toList(),
                         ],
@@ -78,14 +98,19 @@ class HomeScreen extends ConsumerWidget {
                 const SizedBox(height: 16),
                 TextField(
                   decoration: InputDecoration(
-                    prefixIcon: Icon(Icons.search, color: Colors.deepPurple),
+                    filled: true,
+                    fillColor: cardRenk,
+                    prefixIcon: Icon(Icons.search, color: Colors.black26),
                     suffixIcon: Padding(
                       padding: const EdgeInsets.all(12.0),
                       child: SvgPicture.asset('assets/images/Filter.svg'),
                     ),
                     hintText: 'Search',
+                    hintStyle: TextStyle(color: Colors.black26,fontSize: 20.sp),
+                    contentPadding: EdgeInsets.symmetric(horizontal: 12.w, vertical: 8.h),
                     border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(5),
+                      borderRadius: BorderRadius.circular(4.0),
+                      borderSide: BorderSide.none,
                     ),
                   ),
                   onChanged: (value) {
@@ -147,7 +172,7 @@ class HomeScreen extends ConsumerWidget {
                                       },
                                       child: Text(
                                         "View All",
-                                        style: TextStyle(color: Colors.deepPurple),
+                                        style: TextStyle(color: butonRenk),
                                       ),
                                     ),
                                   ],

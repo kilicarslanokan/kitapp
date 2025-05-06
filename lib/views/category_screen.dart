@@ -5,6 +5,7 @@ import 'package:kitapp/models/book_model.dart';
 import 'package:kitapp/riverpod/riverpod_management.dart';
 import 'package:kitapp/views/book_details_screen.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:kitapp/widgets/colors.dart';
 
 class CategoryScreen extends ConsumerWidget {
   final dynamic category; // The category object
@@ -20,12 +21,14 @@ class CategoryScreen extends ConsumerWidget {
         : books;
 
     return Scaffold(
+      backgroundColor: Colors.white,
       appBar: AppBar(
+        backgroundColor: Colors.white,
         toolbarHeight: 50.h,
         title: Row(
           mainAxisAlignment: MainAxisAlignment.end,
           children: [
-            Text(category.name),
+            Text(category.name, style: TextStyle(fontWeight: FontWeight.bold)),
           ],
         ),
       ),
@@ -34,17 +37,22 @@ class CategoryScreen extends ConsumerWidget {
           Column(
             children: [
               Padding(
-                padding: const EdgeInsets.all(8.0),
+                padding: const EdgeInsets.all(12.0),
                 child: TextField(
                   decoration: InputDecoration(
-                    prefixIcon: Icon(Icons.search, color: Colors.deepPurple),
+                    filled: true,
+                    fillColor: cardRenk,
+                    prefixIcon: Icon(Icons.search, color: Colors.black26),
                     suffixIcon: Padding(
                       padding: const EdgeInsets.all(12.0),
                       child: SvgPicture.asset('assets/images/Filter.svg'),
                     ),
-                    hintText: 'Search in ${category.name}',
+                    hintText: 'Search',
+                    hintStyle: TextStyle(color: Colors.black26, fontSize: 20.sp),
+                    contentPadding: EdgeInsets.symmetric(horizontal: 12.w, vertical: 8.h),
                     border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(5),
+                      borderRadius: BorderRadius.circular(4.0),
+                      borderSide: BorderSide.none,
                     ),
                   ),
                   onChanged: (value) {

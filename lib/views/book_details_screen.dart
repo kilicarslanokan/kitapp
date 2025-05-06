@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:kitapp/models/book_model.dart';
 import 'package:kitapp/widgets/buttons.dart';
+import 'package:kitapp/widgets/colors.dart';
 
 class BookDetailsScreen extends StatelessWidget {
   final Book book;
@@ -11,7 +12,20 @@ class BookDetailsScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text('Book Details')),
+      backgroundColor: Colors.white,
+      appBar: AppBar(
+        backgroundColor: Colors.white,
+        toolbarHeight: 50.h,
+        title: Row(
+          mainAxisAlignment: MainAxisAlignment.end,
+          children: [
+            const Text(
+              'Book Details',
+              style: TextStyle(fontWeight: FontWeight.bold),
+            ),
+          ],
+        ),
+      ),
       body: Column(
         children: [
           Expanded(
@@ -20,19 +34,26 @@ class BookDetailsScreen extends StatelessWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                  // Book Cover Image
-                  Center(
-                    child: ClipRRect(
-                      borderRadius: BorderRadius.circular(8.0),
-                      child: Image.network(
-                        book.cover,
-                        height: 200,
-                        fit: BoxFit.cover,
+                  Stack(
+                    children: [
+                      Center(
+                        child: ClipRRect(
+                          borderRadius: BorderRadius.circular(6.0),
+                          child: Image.network(
+                            book.cover,
+                            height: 250,
+                            fit: BoxFit.cover,
+                          ),
+                        ),
                       ),
-                    ),
+                      Positioned(
+                        top: 0.0, // İkonun üstte sabit kalması için
+                        left: 330.0, // İkonun sağda sabit kalması için
+                        child: Image.asset('assets/images/Heart.png'),
+                      ),
+                    ],
                   ),
                   const SizedBox(height: 16),
-
                   // Book Name
                   Text(
                     book.name,
@@ -43,25 +64,22 @@ class BookDetailsScreen extends StatelessWidget {
                     textAlign: TextAlign.center,
                   ),
                   const SizedBox(height: 8),
-
                   // Author Name
                   Text(
                     book.author,
-                    style: const TextStyle(
-                      fontSize: 18,
-                      color: Colors.grey,
-                    ),
+                    style: TextStyle(fontSize: 18.sp, color: textRenk2),
                     textAlign: TextAlign.center,
                   ),
                   const SizedBox(height: 16),
 
                   // Summary Section
-                  const Align(
+                  Align(
                     alignment: Alignment.centerLeft,
                     child: Text(
                       'Summary',
                       style: TextStyle(
-                        fontSize: 20,
+                        fontSize: 20.sp,
+                        color: textRenk,
                         fontWeight: FontWeight.bold,
                       ),
                     ),
@@ -71,7 +89,7 @@ class BookDetailsScreen extends StatelessWidget {
                     book.description.length > 400
                         ? '${book.description.substring(0, 400)}...'
                         : book.description,
-                    style: const TextStyle(fontSize: 16),
+                    style: TextStyle(fontSize: 15.sp, color: textRenk2),
                     textAlign: TextAlign.justify,
                   ),
                   const SizedBox(height: 16),
@@ -87,17 +105,11 @@ class BookDetailsScreen extends StatelessWidget {
                 children: [
                   Text(
                     "${book.price} \$",
-                    style: TextStyle(
-                      fontSize: 20.sp,
-                      color: Colors.white,
-                    ),
+                    style: TextStyle(fontSize: 20.sp, color: Colors.white),
                   ),
                   Text(
                     'Buy Now',
-                    style: TextStyle(
-                      fontSize: 20.sp,
-                      color: Colors.white,
-                    ),
+                    style: TextStyle(fontSize: 20.sp, color: Colors.white),
                   ),
                 ],
               ),
