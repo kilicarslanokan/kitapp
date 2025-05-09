@@ -8,8 +8,8 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:kitapp/widgets/colors.dart';
 
 class CategoryScreen extends ConsumerWidget {
-  final dynamic category; // The category object
-  final List<Book> books; // The books in the category
+  final dynamic category;
+  final List<Book> books;
 
   const CategoryScreen({super.key, required this.category, required this.books});
 
@@ -37,14 +37,14 @@ class CategoryScreen extends ConsumerWidget {
           Column(
             children: [
               Padding(
-                padding: const EdgeInsets.all(12.0),
+                padding: EdgeInsets.all(12.0.w),
                 child: TextField(
                   decoration: InputDecoration(
                     filled: true,
                     fillColor: cardRenk,
                     prefixIcon: Icon(Icons.search, color: Colors.black26),
                     suffixIcon: Padding(
-                      padding: const EdgeInsets.all(12.0),
+                      padding: EdgeInsets.all(12.0.w),
                       child: SvgPicture.asset('assets/images/Filter.svg'),
                     ),
                     hintText: 'Search',
@@ -60,23 +60,23 @@ class CategoryScreen extends ConsumerWidget {
                   },
                 ),
               ),
-              SizedBox(height: 15),
+              SizedBox(height: 8.h),
               Expanded(
                 child: filteredBooks.isEmpty
                     ? Center(
                         child: Text(
                           'Aradığınız kitap bu kategoride bulunamadı.',
-                          style: TextStyle(fontSize: 16, color: Colors.grey),
+                          style: TextStyle(fontSize: 16.sp, color: Colors.grey),
                         ),
                       )
                     : Padding(
-                        padding: const EdgeInsets.all(8.0),
+                        padding: EdgeInsets.all(8.0.w),
                         child: GridView.builder(
                           gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                            crossAxisCount: 2, // Two books per row
+                            crossAxisCount: 2,
                             crossAxisSpacing: 8.0,
                             mainAxisSpacing: 8.0,
-                            childAspectRatio: 0.6, // Adjusted aspect ratio for taller cards
+                            childAspectRatio: 0.6,
                           ),
                           itemCount: filteredBooks.length,
                           itemBuilder: (context, index) {
@@ -93,49 +93,50 @@ class CategoryScreen extends ConsumerWidget {
                               child: Card(
                                 elevation: 3,
                                 child: Padding(
-                                  padding: const EdgeInsets.only(top: 8.0),
+                                  padding: EdgeInsets.only(top: 8.0.h),
                                   child: Column(
                                     crossAxisAlignment: CrossAxisAlignment.start,
                                     children: [
                                       AspectRatio(
-                                        aspectRatio: 3 / 4, // Adjusted aspect ratio for better image fit
+                                        aspectRatio: 3 / 4,
                                         child: Image.network(
                                           book.cover,
                                           width: double.infinity,
-                                          fit: BoxFit.cover, // Ensure the image fills the card's width
+                                          fit: BoxFit.cover,
                                         ),
                                       ),
                                       Padding(
-                                        padding: const EdgeInsets.fromLTRB(10, 0, 8, 0),
+                                        padding: EdgeInsets.fromLTRB(10.w, 0, 8.w, 0),
                                         child: Column(
                                           crossAxisAlignment: CrossAxisAlignment.start,
                                           children: [
                                             Text(
                                               book.name,
                                               style: TextStyle(
+                                                color: textRenk,
                                                 fontWeight: FontWeight.bold,
-                                                fontSize: 14,
+                                                fontSize: 14.sp,
                                               ),
-                                              maxLines: 1, // Limit to a single line
-                                              overflow: TextOverflow.ellipsis, // Add ellipsis for overflow
+                                              maxLines: 1,
+                                              overflow: TextOverflow.ellipsis,
                                             ),
-                                            const SizedBox(height: 2),
+                                            SizedBox(height: 2.h),
                                             Row(
                                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                               children: [
                                                 Expanded(
                                                   child: Text(
                                                     book.author,
-                                                    style: TextStyle(fontSize: 13, color: Colors.grey[700]),
-                                                    maxLines: 1, // Limit to a single line
-                                                    overflow: TextOverflow.ellipsis, // Add ellipsis for overflow
+                                                    style: TextStyle(fontSize: 12.sp, color: textRenk2),
+                                                    maxLines: 1,
+                                                    overflow: TextOverflow.ellipsis,
                                                   ),
                                                 ),
                                                 Text(
                                                   '${book.price} \$',
                                                   style: TextStyle(
                                                     fontWeight: FontWeight.bold,
-                                                    color: Colors.deepPurple,
+                                                    color: anaRenk,
                                                   ),
                                                 ),
                                               ],

@@ -18,6 +18,7 @@ class _SplashScreenState extends ConsumerState<SplashScreen> {
 
   @override
   void initState() {
+    // eğer bir token yoksa login ekranına git, varsa home ekranına git
     Future.delayed(const Duration(seconds: 3), () {
       if (box.read("token")!=null) {
         Navigator.pushReplacement(
@@ -82,7 +83,6 @@ class _SplashScreenState extends ConsumerState<SplashScreen> {
               },
               style: ElevatedButton.styleFrom(
                 backgroundColor: textRenk,
-                //minimumSize: Size(330.w, 50.h),
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(5),
                 ),

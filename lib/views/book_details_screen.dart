@@ -30,7 +30,7 @@ class BookDetailsScreen extends StatelessWidget {
         children: [
           Expanded(
             child: Padding(
-              padding: const EdgeInsets.all(16.0),
+              padding: EdgeInsets.all(14.0.w),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
@@ -41,37 +41,37 @@ class BookDetailsScreen extends StatelessWidget {
                           borderRadius: BorderRadius.circular(6.0),
                           child: Image.network(
                             book.cover,
-                            height: 250,
+                            height: 210.h,
                             fit: BoxFit.cover,
                           ),
                         ),
                       ),
                       Positioned(
-                        top: 0.0, // İkonun üstte sabit kalması için
-                        left: 330.0, // İkonun sağda sabit kalması için
+                        top: 0.0,
+                        left: 300.0,
                         child: Image.asset('assets/images/Heart.png'),
                       ),
                     ],
                   ),
-                  const SizedBox(height: 16),
+                  SizedBox(height: 14.h),
                   // Book Name
                   Text(
                     book.name,
-                    style: const TextStyle(
-                      fontSize: 24,
+                    style: TextStyle(
+                      color: textRenk,
+                      fontSize: 22.sp,
                       fontWeight: FontWeight.bold,
                     ),
                     textAlign: TextAlign.center,
                   ),
-                  const SizedBox(height: 8),
+                  SizedBox(height: 6.h),
                   // Author Name
                   Text(
                     book.author,
                     style: TextStyle(fontSize: 18.sp, color: textRenk2),
                     textAlign: TextAlign.center,
                   ),
-                  const SizedBox(height: 16),
-
+                  SizedBox(height: 16.h),
                   // Summary Section
                   Align(
                     alignment: Alignment.centerLeft,
@@ -84,41 +84,40 @@ class BookDetailsScreen extends StatelessWidget {
                       ),
                     ),
                   ),
-                  const SizedBox(height: 8),
+                  SizedBox(height: 6.h),
                   Text(
-                    book.description.length > 400
-                        ? '${book.description.substring(0, 400)}...'
+                    book.description.length > 350
+                        ? '${book.description.substring(0, 350)}...'
                         : book.description,
                     style: TextStyle(fontSize: 15.sp, color: textRenk2),
                     textAlign: TextAlign.justify,
                   ),
-                  const SizedBox(height: 16),
+                  SizedBox(height: 12.h),
                 ],
               ),
             ),
           ),
           Padding(
-            padding: const EdgeInsets.all(16.0),
+            padding: EdgeInsets.all(14.0.w),
             child: CustomButton(
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Text(
                     "${book.price} \$",
-                    style: TextStyle(fontSize: 20.sp, color: Colors.white),
+                    style: TextStyle(fontSize: 18.sp, color: Colors.white),
                   ),
                   Text(
                     'Buy Now',
-                    style: TextStyle(fontSize: 20.sp, color: Colors.white),
+                    style: TextStyle(fontSize: 18.sp, color: Colors.white),
                   ),
                 ],
               ),
               onPressed: () {
-                // Add buy functionality here
               },
             ),
           ),
-          const SizedBox(height: 16),
+          SizedBox(height: 12.h),
         ],
       ),
     );
