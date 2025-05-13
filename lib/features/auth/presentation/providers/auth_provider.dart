@@ -1,31 +1,36 @@
+import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 // E-mail validasyon fonksiyonu
-String? validateEmail(String email) {
+String? validateEmail(String email, BuildContext context) {
+  final d = AppLocalizations.of(context)!;
   final RegExp emailRegExp =
       RegExp(r'^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$');
   if (email.isEmpty) {
-    return 'E-mail boş bırakılamaz';
+    return d.emailEmpty;
   } else if (!emailRegExp.hasMatch(email)) {
-    return 'Geçerli bir e-mail giriniz';
+    return d.emailValid;
   }
   return null; // Hata yok
 }
 
 // Şifre validasyon fonksiyonu
-String? validatePassword(String password) {
+String? validatePassword(String password, BuildContext context) {
+  final d = AppLocalizations.of(context)!;
   final RegExp passwordRegExp = RegExp(r'^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{6,20}$');
   if (password.isEmpty) {
-    return 'Şifre boş bırakılamaz';
+    return d.pswdEmpty;
   } else if (!passwordRegExp.hasMatch(password)) {
-    return 'Şifre 6-20 karakter arasında ve alfanumerik olmalı';
+    return d.pswdValid;
   }
   return null; // Hata yok
 }
 
-String? validateName(String name) {
+String? validateName(String name, BuildContext context) {
+  final d = AppLocalizations.of(context)!;
   if (name.isEmpty) {
-    return 'İsim boş bırakılamaz';
+    return d.nameEmpty;
   }
   return null; // Hata yok
 }

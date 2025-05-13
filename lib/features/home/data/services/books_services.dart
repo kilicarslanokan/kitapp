@@ -1,6 +1,6 @@
 import 'dart:convert';
 import 'package:http/http.dart' as http;
-import 'package:kitapp/models/book_model.dart';
+import 'package:kitapp/features/home/data/models/book_model.dart';
 
 Future<List<Book>> fetchBooks(int categoryId) async {
   if (categoryId == 0) {

@@ -1,5 +1,5 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:kitapp/models/book_model.dart';
+import 'package:kitapp/features/home/data/models/book_model.dart';
 
 class BookCacheNotifier extends StateNotifier<Map<int, List<Book>>> {
   BookCacheNotifier() : super({});

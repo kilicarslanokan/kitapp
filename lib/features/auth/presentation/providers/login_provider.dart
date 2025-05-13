@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:get_storage/get_storage.dart';
-import 'package:kitapp/riverpod/riverpod_management.dart';
-import 'package:kitapp/views/home_screen.dart';
-import 'package:kitapp/services/login_service.dart';
+import 'package:kitapp/features/home/presentation/pages/home_screen.dart';
+import 'package:kitapp/features/auth/data/services/login_service.dart';
 
 class LoginRiverpod extends ChangeNotifier {
   final service = LoginService();
@@ -35,3 +34,5 @@ class LoginRiverpod extends ChangeNotifier {
     });
   }
 }
+final loginRiverpod = ChangeNotifierProvider((_) => LoginRiverpod());
+final rememberMeProvider = StateProvider<bool>((ref) => false);

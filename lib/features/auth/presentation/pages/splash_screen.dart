@@ -2,9 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get_storage/get_storage.dart';
-import 'package:kitapp/views/home_screen.dart';
-import 'package:kitapp/views/login_screen.dart';
+import 'package:kitapp/features/home/presentation/pages/home_screen.dart';
+import 'package:kitapp/features/auth/presentation/pages/login_screen.dart';
 import 'package:kitapp/widgets/colors.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class SplashScreen extends ConsumerStatefulWidget {
   const SplashScreen({super.key});
@@ -41,6 +42,8 @@ class _SplashScreenState extends ConsumerState<SplashScreen> {
 
   @override
   Widget build(BuildContext context) {
+    var d = AppLocalizations.of(context)!;
+
     return Scaffold(
       backgroundColor: textRenk,
       body: Column(
@@ -67,7 +70,7 @@ class _SplashScreenState extends ConsumerState<SplashScreen> {
                 ),
               ),
               child: Text(
-                "Login",
+                d.login,
                 style: TextStyle(color: Colors.white, fontSize: 20.sp),
               ),
             ),
@@ -88,7 +91,7 @@ class _SplashScreenState extends ConsumerState<SplashScreen> {
                 ),
               ),
               child: Text(
-                "Skip",
+                d.skip,
                 style: TextStyle(color: anaRenk, fontSize: 15.sp),
               ),
             ),

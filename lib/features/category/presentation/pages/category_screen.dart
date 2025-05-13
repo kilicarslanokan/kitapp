@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:kitapp/models/book_model.dart';
-import 'package:kitapp/riverpod/riverpod_management.dart';
-import 'package:kitapp/views/book_details_screen.dart';
+import 'package:kitapp/features/home/data/models/book_model.dart';
+import 'package:kitapp/features/home/presentation/providers/search_provider.dart';
+import 'package:kitapp/features/detail/presentation/pages/book_details_screen.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:kitapp/widgets/colors.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:kitapp/widgets/search_bar.dart';
 
 class CategoryScreen extends ConsumerWidget {
   final dynamic category;
@@ -15,6 +17,9 @@ class CategoryScreen extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+
+      var d = AppLocalizations.of(context)!;
+
     final searchQuery = ref.watch(searchQueryProvider);
     final filteredBooks = searchQuery.isNotEmpty
         ? books.where((book) => book.name.toLowerCase().contains(searchQuery.toLowerCase())).toList()
@@ -38,34 +43,17 @@ class CategoryScreen extends ConsumerWidget {
             children: [
               Padding(
                 padding: EdgeInsets.all(12.0.w),
-                child: TextField(
-                  decoration: InputDecoration(
-                    filled: true,
-                    fillColor: cardRenk,
-                    prefixIcon: Icon(Icons.search, color: Colors.black26),
-                    suffixIcon: Padding(
-                      padding: EdgeInsets.all(12.0.w),
-                      child: SvgPicture.asset('assets/images/Filter.svg'),
-                    ),
-                    hintText: 'Search',
-                    hintStyle: TextStyle(color: Colors.black26, fontSize: 20.sp),
-                    contentPadding: EdgeInsets.symmetric(horizontal: 12.w, vertical: 8.h),
-                    border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(4.0),
-                      borderSide: BorderSide.none,
-                    ),
-                  ),
+                child: SearchTextField(
+                  hintText: d.search,
                   onChanged: (value) {
-                    ref.read(searchQueryProvider.notifier).state = value;
-                  },
-                ),
+                  ref.read(searchQueryProvider.notifier).state = value;
+                }),
               ),
               SizedBox(height: 8.h),
               Expanded(
                 child: filteredBooks.isEmpty
                     ? Center(
-                        child: Text(
-                          'Aradığınız kitap bu kategoride bulunamadı.',
+                        child: Text(d.searchResult,
                           style: TextStyle(fontSize: 16.sp, color: Colors.grey),
                         ),
                       )
@@ -133,7 +121,7 @@ class CategoryScreen extends ConsumerWidget {
                                                   ),
                                                 ),
                                                 Text(
-                                                  '${book.price} \$',
+                                                  '${book.price} ' + d.moneyType,
                                                   style: TextStyle(
                                                     fontWeight: FontWeight.bold,
                                                     color: anaRenk,

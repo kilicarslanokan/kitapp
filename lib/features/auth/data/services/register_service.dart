@@ -1,5 +1,5 @@
 import 'package:dio/dio.dart';
-import 'package:kitapp/models/register_model.dart';
+import 'package:kitapp/features/auth/data/models/register_model.dart';
 
 class RegisterService {
   final String baseUrl = "https://assign-api.piton.com.tr/api/rest/";

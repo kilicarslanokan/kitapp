@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:kitapp/models/register_model.dart';
-import 'package:kitapp/services/register_service.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:kitapp/features/auth/data/models/register_model.dart';
+import 'package:kitapp/features/auth/data/services/register_service.dart';
 
 class RegisterRiverpod extends ChangeNotifier {
   final service = RegisterService();
@@ -26,3 +27,4 @@ class RegisterRiverpod extends ChangeNotifier {
     }
   }
 }
+final registerProvider = ChangeNotifierProvider((_) => RegisterRiverpod());

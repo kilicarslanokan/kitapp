@@ -2,18 +2,23 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:flutter_svg/flutter_svg.dart';
-import 'package:kitapp/riverpod/riverpod_management.dart';
-import 'package:kitapp/views/book_details_screen.dart';
-import 'package:kitapp/views/category_screen.dart';
+import 'package:kitapp/features/category/presentation/providers/category_provider.dart';
+import 'package:kitapp/features/home/presentation/providers/search_provider.dart';
+import 'package:kitapp/features/detail/presentation/pages/book_details_screen.dart';
+import 'package:kitapp/features/category/presentation/pages/category_screen.dart';
 import 'package:kitapp/widgets/colors.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:kitapp/widgets/search_bar.dart';
 
 class HomeScreen extends ConsumerWidget {
   const HomeScreen({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    // Tüm Kitapları başlangıçta bir kez yükle
+    // Dil desteği için kullanıyoruz
+    var d = AppLocalizations.of(context)!;
+
+    // Tüm Kitapları başlangıçta bir kez yüklemek için kullanıyoruz
     Future.microtask(() {
       if (ref.read(searchQueryProvider) == "") {
         ref.read(searchProvider.notifier).searchBooks("");
@@ -33,15 +38,15 @@ class HomeScreen extends ConsumerWidget {
         title: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            Image.asset('assets/images/Logo.png', height: 40),
-            const Text("Catalog", style: TextStyle(fontWeight: FontWeight.bold)),
+            Image.asset('assets/images/Logo.png', height: 35.h),
+            Text(d.catalog, style: TextStyle(fontWeight: FontWeight.bold)),
           ],
         ),
       ),
       body: Stack(
         children: [
           Padding(
-            padding: const EdgeInsets.all(12.0),
+            padding: EdgeInsets.all(12.0.w),
             child: Column(
               children: [
                 categoryAsyncValue.when(
@@ -56,6 +61,8 @@ class HomeScreen extends ConsumerWidget {
                             onPressed: () {
                               ref.read(selectedCategoryProvider.notifier).state = 0;
                             },
+                            // Böyle de kullanılabilir:
+                            // onPressed: () => ref.read(selectedCategoryProvider.notifier).state = 0,
                             style: ElevatedButton.styleFrom(
                               shape: RoundedRectangleBorder(
                                 borderRadius: BorderRadius.circular(5.0),
@@ -63,7 +70,7 @@ class HomeScreen extends ConsumerWidget {
                               foregroundColor: selectedCategoryId == 0 ? Colors.white : Colors.black38,
                               backgroundColor: selectedCategoryId == 0 ? Colors.deepPurple : cardRenk,
                             ),
-                            child: Text('All',
+                            child: Text(d.all,
                                 style: TextStyle(fontSize: 14.sp)),
                           ),
                           SizedBox(width: 8.w),
@@ -72,9 +79,8 @@ class HomeScreen extends ConsumerWidget {
                             return Row(
                               children: [
                                 ElevatedButton(
-                                  onPressed: () {
-                                    ref.read(selectedCategoryProvider.notifier).state = category.id;
-                                  },
+                                  onPressed: () => // Kategoriye tıklandığında seçili kategoriyi güncelliyoruz
+                                    ref.read(selectedCategoryProvider.notifier).state = category.id,
                                   style: ElevatedButton.styleFrom(
                                     padding: EdgeInsets.symmetric(horizontal: 20.w, vertical: 8.h),
                                     shape: RoundedRectangleBorder(
@@ -95,30 +101,14 @@ class HomeScreen extends ConsumerWidget {
                     );
                   },
                 ),
-                const SizedBox(height: 16),
-                TextField(
-                  decoration: InputDecoration(
-                    filled: true,
-                    fillColor: cardRenk,
-                    prefixIcon: Icon(Icons.search, color: Colors.black26),
-                    suffixIcon: Padding(
-                      padding: const EdgeInsets.all(12.0),
-                      child: SvgPicture.asset('assets/images/Filter.svg'),
-                    ),
-                    hintText: 'Search',
-                    hintStyle: TextStyle(color: Colors.black26,fontSize: 20.sp),
-                    contentPadding: EdgeInsets.symmetric(horizontal: 12.w, vertical: 8.h),
-                    border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(4.0),
-                      borderSide: BorderSide.none,
-                    ),
-                  ),
+                SizedBox(height: 16.h),
+                SearchTextField(
+                  hintText: d.search,
                   onChanged: (value) {
-                    ref.read(searchQueryProvider.notifier).state = value;
-                    ref.read(searchProvider.notifier).searchBooks(value);
-                  },
-                ),
-                const SizedBox(height: 15),
+                  ref.read(searchQueryProvider.notifier).state = value;
+                  ref.read(searchProvider.notifier).searchBooks(value);
+                }),
+                SizedBox(height: 8.h),
                 Expanded(
                   child: categoryAsyncValue.when(
                     loading: () => Center(child: CircularProgressIndicator()),
@@ -131,7 +121,7 @@ class HomeScreen extends ConsumerWidget {
                               : books.where((book) => book.categoryId == selectedCategoryId).toList();
 
                       if (filteredBooks.isEmpty) {
-                        return Center(child: Text('Loading..'));
+                        return Center(child: Text(d.searchResult));
                       }
 
                       return ListView.builder(
@@ -150,13 +140,13 @@ class HomeScreen extends ConsumerWidget {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Padding(
-                                padding: const EdgeInsets.symmetric(vertical: 8.0, horizontal: 8.0),
+                                padding: EdgeInsets.symmetric(vertical: 6.0.h, horizontal: 8.0.w),
                                 child: Row(
                                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                   children: [
                                     Text(
                                       category.name,
-                                      style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                                      style: TextStyle(fontSize: 20.sp, fontWeight: FontWeight.bold),
                                     ),
                                     TextButton(
                                       onPressed: () {
@@ -171,15 +161,15 @@ class HomeScreen extends ConsumerWidget {
                                         );
                                       },
                                       child: Text(
-                                        "View All",
-                                        style: TextStyle(color: butonRenk),
+                                        d.viewAll,
+                                        style: TextStyle(color: butonRenk, fontSize: 14.sp),
                                       ),
                                     ),
                                   ],
                                 ),
                               ),
                               SizedBox(
-                                height: 160, // Kartların yüksekliği
+                                height: 130.h, // Kartların yüksekliği
                                 child: ListView.builder(
                                   scrollDirection: Axis.horizontal,
                                   itemCount: categoryBooks.length,
@@ -195,49 +185,50 @@ class HomeScreen extends ConsumerWidget {
                                         );
                                       },
                                       child: Container(
-                                        width: 250, // Kartın genişliği
-                                        margin: const EdgeInsets.only(right: 12),
+                                        width: 220.w, // Kartın genişliği
+                                        margin: EdgeInsets.only(right: 12.w),
                                         child: Card(
                                           elevation: 3,
                                           child: Padding(
-                                            padding: const EdgeInsets.all(8.0),
+                                            padding: EdgeInsets.all(6.0.w),
                                             child: Row(
                                               children: [
                                                 Image.network(
                                                   book.cover,
-                                                  width: 90,
-                                                  height: 150,
+                                                  width: 80.w,
+                                                  height: 150.h,
                                                   fit: BoxFit.cover,
                                                 ),
-                                                const SizedBox(width: 8),
+                                                SizedBox(width: 8.w),
                                                 Expanded(
                                                   child: Padding(
-                                                    padding: const EdgeInsets.fromLTRB(0, 8, 0, 8),
+                                                    padding: EdgeInsets.fromLTRB(0, 8.h, 0, 8.h),
                                                     child: Column(
                                                       crossAxisAlignment: CrossAxisAlignment.start,
                                                       children: [
                                                         Text(
                                                           book.name,
                                                           style: TextStyle(
+                                                            color: textRenk,
                                                             fontWeight: FontWeight.bold,
-                                                            fontSize: 14,
+                                                            fontSize: 14.sp,
                                                           ),
                                                           maxLines: 2,
                                                           overflow: TextOverflow.ellipsis,
                                                         ),
-                                                        const SizedBox(height: 4),
+                                                        SizedBox(height: 2.h),
                                                         Text(
                                                           book.author,
-                                                          style: TextStyle(fontSize: 13, color: Colors.grey[700]),
+                                                          style: TextStyle(fontSize: 12.sp, color: textRenk2),
                                                           maxLines: 1,
                                                           overflow: TextOverflow.ellipsis,
                                                         ),
                                                         const Spacer(),
                                                         Text(
-                                                          '${book.price} \$',
+                                                          '${book.price} ' + d.moneyType,
                                                           style: TextStyle(
                                                             fontWeight: FontWeight.bold,
-                                                            color: Colors.deepPurple,
+                                                            color: anaRenk,
                                                           ),
                                                         ),
                                                       ],
@@ -253,7 +244,7 @@ class HomeScreen extends ConsumerWidget {
                                   },
                                 ),
                               ),
-                              const SizedBox(height: 16),
+                              SizedBox(height: 12.h),
                             ],
                           );
                         },

@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:kitapp/riverpod/auth_riverpod.dart';
-import 'package:kitapp/riverpod/riverpod_management.dart';
+import 'package:kitapp/features/auth/presentation/providers/auth_provider.dart';
+import 'package:kitapp/features/auth/presentation/providers/register_provider.dart';
 import 'package:kitapp/widgets/buttons.dart';
 import 'package:kitapp/widgets/colors.dart';
 import 'package:kitapp/widgets/text_fields.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class RegisterScreen extends ConsumerStatefulWidget {
   const RegisterScreen({super.key});
@@ -18,6 +19,8 @@ class _RegisterScreenState extends ConsumerState<RegisterScreen> {
   final _formKey = GlobalKey<FormState>();
   @override
   Widget build(BuildContext context) {
+    var d = AppLocalizations.of(context)!;
+
     return Scaffold(
       backgroundColor: Colors.white,
       body: SingleChildScrollView(
@@ -41,11 +44,11 @@ class _RegisterScreenState extends ConsumerState<RegisterScreen> {
                   ),
                   SizedBox(height: 40.h),
                   Text(
-                    "Welcome",
+                    d.welcome,
                     style: TextStyle(color: Colors.black87, fontSize: 15.sp),
                   ),
                   Text(
-                    "Register an account",
+                    d.registerMessage,
                     style: TextStyle(
                       color: textRenk,
                       fontSize: 20.sp,
@@ -54,7 +57,7 @@ class _RegisterScreenState extends ConsumerState<RegisterScreen> {
                   ),
                   SizedBox(height: 50.h),
                   Text(
-                    "Name",
+                    d.name,
                     style: TextStyle(color: textRenk, fontSize: 20.sp),
                   ),
                   SizedBox(height: 5.h),
@@ -62,11 +65,11 @@ class _RegisterScreenState extends ConsumerState<RegisterScreen> {
                     obscureText: false,
                     controller: ref.read(registerProvider).nameController,
                     hintText: "John Doe",
-                    validator: (value) => validateName(value ?? ""),
+                    validator: (value) => validateName(value ?? "", context),
                   ),
                   SizedBox(height: 10.h),
                   Text(
-                    "E-mail",
+                    d.email,
                     style: TextStyle(color: textRenk, fontSize: 20.sp),
                   ),
                   SizedBox(height: 5.h),
@@ -74,11 +77,11 @@ class _RegisterScreenState extends ConsumerState<RegisterScreen> {
                     obscureText: false,
                     controller: ref.read(registerProvider).emailController,
                     hintText: "john@mail.com",
-                    validator: (value) => validateEmail(value ?? ""),
+                    validator: (value) => validateEmail(value ?? "", context),
                   ),
                   SizedBox(height: 10.h),
                   Text(
-                    "Password",
+                    d.password,
                     style: TextStyle(color: textRenk, fontSize: 20.sp),
                   ),
                   SizedBox(height: 5.h),
@@ -86,7 +89,7 @@ class _RegisterScreenState extends ConsumerState<RegisterScreen> {
                     obscureText: true,
                     controller: ref.read(registerProvider).passwordController,
                     hintText: "●●●●●●●●",
-                    validator: (value) => validatePassword(value ?? ""),
+                    validator: (value) => validatePassword(value ?? "", context),
                   ),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.end,
@@ -96,7 +99,7 @@ class _RegisterScreenState extends ConsumerState<RegisterScreen> {
                           Navigator.pop(context);
                         },
                         child: Text(
-                          'Login',
+                          d.login,
                           style: TextStyle(color: anaRenk, fontSize: 15.sp),
                         ),
                       ),
@@ -106,7 +109,7 @@ class _RegisterScreenState extends ConsumerState<RegisterScreen> {
                   CustomButton(
                     child: Center(
                       child: Text(
-                        "Register",
+                        d.register,
                         style: TextStyle(
                           color: Colors.white,
                           fontSize: 20.sp,

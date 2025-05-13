@@ -1,6 +1,6 @@
 import 'dart:convert';
 import 'package:http/http.dart' as http;
-import 'package:kitapp/models/category_model.dart';
+import 'package:kitapp/features/category/data/models/category_model.dart';
 
 Future<List<Category>> fetchCategories() async {
   final response = await http.get(

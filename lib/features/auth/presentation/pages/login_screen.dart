@@ -1,12 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:kitapp/riverpod/auth_riverpod.dart';
-import 'package:kitapp/riverpod/riverpod_management.dart';
-import 'package:kitapp/views/register_screen.dart';
+import 'package:kitapp/features/auth/presentation/providers/auth_provider.dart';
+import 'package:kitapp/features/auth/presentation/providers/login_provider.dart';
+import 'package:kitapp/features/auth/presentation/pages/register_screen.dart';
 import 'package:kitapp/widgets/buttons.dart';
 import 'package:kitapp/widgets/colors.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:kitapp/widgets/text_fields.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class LoginScreen extends ConsumerStatefulWidget {
   const LoginScreen({super.key});
@@ -19,6 +20,7 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
   final _formKey = GlobalKey<FormState>();
   @override
   Widget build(BuildContext context) {
+    var d = AppLocalizations.of(context)!;
     return Scaffold(
         backgroundColor: Colors.white,
         body: SingleChildScrollView(
@@ -42,11 +44,11 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                     ),
                     SizedBox(height: 40.h),
                     Text(
-                      "Welcome back!",
+                      d.welcomeBack,
                       style: TextStyle(color: Colors.black87, fontSize: 15.sp),
                     ),
                     Text(
-                      "Login to your account",
+                      d.loginMessage,
                       style: TextStyle(
                         color: textRenk,
                         fontSize: 20.sp,
@@ -55,7 +57,7 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                     ),
                     SizedBox(height: 50.h),
                     Text(
-                      "E-mail",
+                      d.email,
                       style: TextStyle(color: textRenk, fontSize: 20.sp),
                     ),
                     SizedBox(height: 5.h),
@@ -63,11 +65,11 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                       obscureText: false,
                       controller: ref.read(loginRiverpod).email,
                       hintText: "john@mail.com",
-                      validator: (value) => validateEmail(value ?? ""),
+                      validator: (value) => validateEmail(value ?? "", context),
                     ),
                     SizedBox(height: 10.h),
                     Text(
-                      "Password",
+                      d.password,
                       style: TextStyle(color: textRenk, fontSize: 20.sp),
                     ),
                     SizedBox(height: 5.h),
@@ -75,7 +77,7 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                       obscureText: true,
                       controller: ref.read(loginRiverpod).password,
                       hintText: "●●●●●●●●",
-                      validator: (value) => validatePassword(value ?? ""),
+                      validator: (value) => validatePassword(value ?? "", context),
                     ),
                     Row(
                       children: [
@@ -97,7 +99,7 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                           },
                         ),
                         Text(
-                          'Remember Me',
+                          d.rememberMe,
                           style: TextStyle(color: anaRenk, fontSize: 15.sp),
                         ),
                         Spacer(),
@@ -111,7 +113,7 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                             );
                           },
                           child: Text(
-                            'Register',
+                            d.register,
                             style: TextStyle(color: anaRenk, fontSize: 15.sp),
                           ),
                         ),
@@ -120,7 +122,7 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                     Spacer(),
                     CustomButton(
                         child: Text(
-                          "Login",
+                          d.login,
                           style: TextStyle(
                             color: Colors.white,
                             fontSize: 20.sp,
